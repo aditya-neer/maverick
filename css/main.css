@@ -1,0 +1,86 @@
+/* 
+    Document   : main
+    Created on : Nov 28, 2011, 7:14:35 AM
+    Author     : Adi
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+/* cpc = create poll container */
+#cpc{
+/*    display: block;
+    position: relative;*/
+    width: 500px;
+/*    min-height: 500px;*/
+    margin: 0 auto;
+/*    background-color: bisque;*/
+/*    background-color: #92B3E8;*/
+}
+
+
+/* pt=poll topic */
+#cpc #pt{
+    position: relative;
+    width: 100%;
+    border: black 1px solid;
+    margin-bottom:15px;
+}
+
+
+#cpc #pt .ptitle{
+    position: relative;
+    width: 100%;
+    font-family: arial;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1941A5;
+}
+
+#cpc #opts{
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+#cpc #opts .wrapper{
+    border: black 1px solid;
+}
+
+#cpc #opts .wrapper .labelWrapper{
+    font-family: calibri;
+    font-size: 13pt;
+}
+
+#cpc #opts .wrapper .oc{
+    position: relative;
+}
+
+#cpc #opts .wrapper .oc table{
+    width: 100%;
+}
+
+#cpc #opts .wrapper .oc table tr td{
+    vertical-align: middle;
+    text-align: center;
+}
+
+#cpc #controls{
+    text-align: center;
+}
+
+.remove{
+    position: relative;
+    left:25%;
+    top:25%;
+}
