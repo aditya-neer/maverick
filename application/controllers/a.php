@@ -3,6 +3,7 @@
 class A extends CI_Controller
 {
     public function index(){
-        echo "hi";
+        $this->load->view('pc');
+        //echo 'lol';
     }
 }
