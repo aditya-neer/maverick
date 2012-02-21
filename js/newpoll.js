@@ -186,7 +186,7 @@ function createQuestion(){
 }
 
 function createOption(){
-
+    var mav = new maverick();
     var total = getTotalOptionDivisions();
     var newName = total+1;
 
@@ -285,7 +285,7 @@ function createOption(){
     }).appendTo('#tbl_tr'+newDiv);
 
     jQuery('<img/>', {
-        src:'Icon_Delete.gif',
+        src:mav.base_url+mav.images+mav.close_image,
         id:'remove'+newDiv
     }).bind('click',function(){
         removeMe(newDiv);
