@@ -6,12 +6,6 @@
             echo attachStylesheets(array('main','jquery-ui-1.8.16.custom'));
             echo attachJavascripts(array('jquery','jquery-ui-1.8.16.custom.min','config','newpoll'));
         ?>
-<!--        <link rel="stylesheet" type="text/css" href="css/main.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/>
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="js/config.js"></script>
-        <script type="text/javascript" src="js/newpoll.js"></script>-->
     </head>
     <body>
         <div id="cpc">
