@@ -22,15 +22,15 @@ function createForm(iframeId,action_url){
     return form;
 }
 function uploadImage(fileInput,div_id,action_url){
-    iFrameId = 'iFrame'+div_id;
-    iframe = getNewIframe(iFrameId);
+    var iFrameId = 'iFrame'+div_id;
+    var iframe = getNewIframe(iFrameId);
     document.getElementById(div_id).appendChild(iframe);
     var form = createForm(iFrameId, action_url);
     document.getElementById(div_id).appendChild(form);
     fileInput.setAttribute('name', 'file');
     form.appendChild(fileInput);
     var eventHandler = function () {
-
+        var content;
         if (iframe.detachEvent) iframe.detachEvent("onload", eventHandler);
         else iframe.removeEventListener("load", eventHandler, false);
         if (iframe.contentDocument) {
