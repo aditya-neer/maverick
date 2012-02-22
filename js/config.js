@@ -1,6 +1,8 @@
 function maverick(){
     this.base_url = "http://localhost/saywtf/";
+    this.index_base_url = "http://localhost/saywtf/index.php/";
     this.images = "images/";
+    this.base_controller = "a/";
     this.close_image = "Icon_Delete.gif";
 }
 

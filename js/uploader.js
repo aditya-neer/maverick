@@ -50,16 +50,16 @@ function uploadImage(fileInput,div_id,action_url){
     
 }
 $(document).ready(function(){
+    var urlHelper = new maverick();
     $("#cp_btn").bind("click",function(){
         var elements = $('.oc input:file');
         var totalFiles = elements.size();
         for (var i=0;i< totalFiles;i++) {
-            iptDiv = "iptDiv"
+            var iptDiv = "iptDiv";
             if(i!=0)
-                iptDiv = iptDiv+i
-            element = elements[i]
-            
-            uploadImage(element, iptDiv,  "http://localhost/project/saywtf/index.php/a/uploadFiles");
+                iptDiv = iptDiv+i;
+            var element = elements[i];
+            uploadImage(element, iptDiv, urlHelper.index_base_url+urlHelper.base_controller+'uploadFiles');
         }
         return false;
 
