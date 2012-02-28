@@ -11,13 +11,18 @@ class Auth extends CI_Model {
     }
     
     function userAuthentication($email,$pass){
-        
-//        $inputs = $this->session->userdata('loginData');
-//        $email =$inputs['email'];
-//        $pass= $inputs['upass'];
-        
+
+        if (preg_match("^[a-zA-Z]([.]?([a-zA-Z0-9_-]+)*)?@([a-zA-Z0-9\-_]+\.)+[a-zA-Z]{2,4}$^", $email)){
+
         $query = "SELECT user_user_id,user_user_password,user_user_verified FROM login WHERE user_user_email='$email'";
         $result = $this->db->query($query);
+        }
+        else{
+            $username=$email;
+          $query = "SELECT user_user_id,user_user_password,user_user_verified FROM login WHERE user_user_name='$username'";
+
+          $result = $this->db->query($query);
+        }
         
         if($result->num_rows() == 1){
             $row = $result->result_array();
