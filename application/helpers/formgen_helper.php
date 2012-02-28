@@ -242,7 +242,7 @@ border:grey 1px solid;
 }
 
 function generateLoginForm($submitUrl){
-    $element1 = new formGeneratorStructure("Enter Email Id", inputTypes::$Text, "email", "email", isRequired::$required, validation::$emailValidation, "Email Id", NULL);
+    $element1 = new formGeneratorStructure("Enter Email Id", inputTypes::$Text, "email", "email", isRequired::$required, validation::$noValidation, "Email Id", NULL);
     $element2 = new formGeneratorStructure("Enter Password", inputTypes::$Password, "pass", "pass", isRequired::$required, validation::$noValidation, "Password", NULL);
                             
     $formElements=array(
