@@ -102,6 +102,25 @@ class Auth extends CI_Model {
                }
            }
     }
+
+    function IsVerify($email){
+        
+
+        $no=-1;
+        $query="SELECT user_user_verified FROM login WHERE user_user_email='$email'";
+        $result=$this->db->query($query);
+
+        
+                if($result->num_rows()===1){
+                $row = $result->result_array();
+                $verified = $row[0]['user_user_verified'];
+                return $verified;
+                }else{
+                    return $no ;
+                }
+
+
+    }
     
     
 }
