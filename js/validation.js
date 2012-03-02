@@ -1,22 +1,101 @@
 var x = $(document).ready(function(){
    $("#sbmt").bind("click",function(){
 
+
+//alert(document.getElementById('f1').submit());
+
+
+
+
+
        if(checkIfRequiredFieldsAreNotEmpty()){
            if(performDatatypeValidation()){
-               if(validatePasswords()){
-                   document.getElementById('f1').submit();
-               }else {
+                if(validatePasswords()){
+                    //                   document.getElementById('f1').submit();
+                    var email=document.getElementById('email').value;
+                    //
+                    $.post('http://localhost/saywtf/index.php/a/Is_verified',{"email":email},function(data){
+
+                        
+                        if(data==0){
+                            var newDiv = addVerify();
+                            $("#oldUser div:eq(1)").empty().append(newDiv);
+                        }
+                        else if(data==1) {
+                            document.getElementById('f1').submit();
+                        }
+                        else if(data==-1){
+
+                           alert("ENter Valid ID") ;
+                           
+                        }
+
+                    });
+
+                }else {
                    
-               }
-           } else {
+            }
+            } else {
                
-           }
-       } else {
+        }
+        } else {
            
-       }
+    }
        
     });
 });
+
+
+
+
+
+function addVerify(){
+
+var div = jQuery('<div/>',{
+    
+});
+
+var table = jQuery('<table/>', {
+style:"margin: auto;display: block;width: 77%;margin-top: -18;margin-left: 348px;"
+});
+
+var tr=jQuery('<tr/>', {
+});
+
+var td1 = jQuery('<td/>', {
+    style:"width:20%"
+});
+var td2 = jQuery('<td/>', {});
+var td3 = jQuery('<td/>', {});
+
+var label = jQuery('<label />',{
+    text:"Enter verification code"
+    
+});
+
+var input = jQuery('<input />',{
+    type:"text"
+});
+
+var button = jQuery('<input />',{
+    type:"button",
+    value:"Verify",
+    style:"margin-left:-200%"
+}).bind('click',function(){});
+
+td1.append(label);
+td2.append(input);
+td3.append(button);
+
+tr.append(td1);
+tr.append(td2);
+tr.append(td3);
+
+table.append(tr);
+div.append(table);
+return div;
+}
+
 
 function validation() {
     this.noValidation = -1;
@@ -73,6 +152,7 @@ function performDatatypeValidation(){
     
     while(i<len){
         var isElement = document.getElementById("gForm").getElementsByTagName("input")[i];
+      
         if(isElement){
             var validationType = isElement.getAttribute("validation");
             var stringToBeValidated = isElement.value;
@@ -154,6 +234,7 @@ function checkIfRequiredFieldsAreNotEmpty(){
 function validatePasswords(){
     var errorMessage = "The two passwords do not match";
     var inputs = document.getElementsByTagName("input");
+    
     var passFields = new Array();
     var passDivs = new Array();
     var len = inputs.length;
