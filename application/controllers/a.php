@@ -5,6 +5,7 @@ class A extends CI_Controller {
     public function index() {
         $this->load->view('welcome');
         //echo 'lol';
+        
     }
     function showRegistration(){
         $data = array(
@@ -87,15 +88,16 @@ class A extends CI_Controller {
             $username = $this->session->userdata('user_name');
             $user_verified = $this->session->userdata('user_verified');
 
-            if($user_verified==0){
-                redirect('a/verify_user');            
-            }
-            else{
-            echo $email;
-            echo $user_id;
-            echo $username;
-            echo $user_verified;
-            }
+//            if($user_verified==0){
+//
+//
+//            }
+//            else{
+//            echo $email;
+//            echo $user_id;
+//            echo $username;
+//            echo $user_verified;
+//            }
         } else {
             echo "login fails";
         }
@@ -122,6 +124,19 @@ class A extends CI_Controller {
 //        } else {
 //            //redirect to invalid input page
 //        }
+    }
+
+    function Is_verified(){
+        
+       $email=$this->input->post('email');
+       $this->load->model('auth');
+       $result=$this->auth->isVerify($email);
+echo $result;
+
+       
+
+
+
     }
 
 
