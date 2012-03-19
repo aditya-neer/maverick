@@ -10,11 +10,11 @@ class A extends CI_Controller {
     function showRegistration(){
         $data = array(
             "title"=>"New User Registration",
-            "styleSheets"=>array("main","jquery-ui"),
-            "javascripts"=>array("jquery","jquery-custom")
+            "styleSheets"=>array("main","jquery-ui-1.8.16.custom"),
+            "javascripts"=>array("jquery","jquery-ui-1.8.12.custom.min")
         );
 //        $this->load->view('head',$data);
-        $this->load->view('registration');
+        $this->load->view('registration',$data);
 //        $this->load->view('foot');
     }
     public function uploadFiles(){
