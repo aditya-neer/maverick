@@ -25,20 +25,22 @@ class Auth extends CI_Model {
         if($result->num_rows() == 1){
             $row = $result->result_array();
             $upass = $row[0]['user_user_password'];
+           
             if($upass === $pass){
-<<<<<<< HEAD
-                $q="SELECT user_name,user_email FROM user WHERE user_id=".$row[0]['user_user_id'];
 
-=======
-                $q="SELECT user_name,user_email,user_user_verified FROM user WHERE user_id=".$row[0]['user_user_id'];
->>>>>>> 4b1ead3a51730a4044050c503e92dd4392e6ae0e
+                //$q="SELECT user_name,user_email FROM `user` WHERE user_id=".$row[0]['user_user_id'];
+                
+
+                $q="SELECT user_user_name,user_user_email,user_user_verified FROM login WHERE user_user_id=".$row[0]['user_user_id'];
+               
                 $res = $this->db->query($q);
                 $r = $res->result_array();
                 $user_id=$row[0]['user_user_id'];
                 $user_verified=$row[0]['user_user_verified'];
-                         
-                $this->session->set_userdata('user_email',$r[0]['user_email']);
-                $this->session->set_userdata('user_name',$r[0]['user_name']);
+               
+                
+                $this->session->set_userdata('user_email',$r[0]['user_user_email']);
+                $this->session->set_userdata('user_name',$r[0]['user_user_name']);
                 $this->session->set_userdata('user_verified',$user_verified);
                 $this->session->set_userdata('user_id',$user_id);
                 return true;
