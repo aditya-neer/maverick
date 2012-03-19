@@ -1,47 +1,35 @@
-var x = $(document).ready(function(){
-   $("#sbmt").bind("click",function(){
-
-
-//alert(document.getElementById('f1').submit());
-
-
-
-
-
+$(document).ready(function(){
+   $("#lgn").bind("click",function(){
        if(checkIfRequiredFieldsAreNotEmpty()){
            if(performDatatypeValidation()){
                 if(validatePasswords()){
-                    //                   document.getElementById('f1').submit();
                     var email=document.getElementById('email').value;
-                    //
-                    $.post('http://localhost/saywtf/index.php/a/Is_verified',{"email":email},function(data){
-
-                        
-                        if(data==0){
+                    $.post('http://localhost/saywtf/index.php/a/login',{"email":email},function(data){
+                        if(data==0){ // invalid credentials
+                            // Error message - Invalid username or password
+                        }
+                        else if(data==1) { // 1 = valid credentials but not verified -
                             var newDiv = addVerify();
                             $("#oldUser div:eq(1)").empty().append(newDiv);
                         }
-                        else if(data==1) {
-                            document.getElementById('f1').submit();
+                        else if(data==2){ // 2 = valid credentials and verified
+                          alert('Login successful');
                         }
-                        else if(data==-1){
-
-                           alert("ENter Valid ID") ;
-                           
-                        }
-
                     });
+                }else {}
+            } else {}
+        } else {}
 
-                }else {
-                   
-            }
-            } else {
-               
-        }
-        } else {
-           
-    }
-       
+    });
+
+    $("#rgstr").bind("click",function(){
+       if(checkIfRequiredFieldsAreNotEmpty()){
+           if(performDatatypeValidation()){
+               if(validatePasswords()){
+                   document.getElementById('f1').submit();
+               }else {}
+           } else {}
+       } else {}
     });
 });
 
@@ -71,17 +59,32 @@ var td3 = jQuery('<td/>', {});
 var label = jQuery('<label />',{
     text:"Enter verification code"
     
+    
 });
 
 var input = jQuery('<input />',{
-    type:"text"
+    type:"text",
+    id:"vcode"
 });
 
 var button = jQuery('<input />',{
     type:"button",
     value:"Verify",
+    id:"Verify",
     style:"margin-left:-200%"
-}).bind('click',function(){});
+}).bind('click',function(){
+
+    var code= document.getElementById('vcode').value;
+     var email= document.getElementById('email').value;
+     
+    
+   $.post("http://localhost/saywtf/index.php/a/verify",{"code":code,"email":email},function(data){
+alert(data);
+   });
+
+
+
+});
 
 td1.append(label);
 td2.append(input);

@@ -3,18 +3,20 @@
 class A extends CI_Controller {
 
     public function index() {
-        $this->load->view('pc');
+        $this->load->view('welcome');
+        //echo 'lol';
+        
     }
-
     function showRegistration(){
         $data = array(
             "title"=>"New User Registration",
             "styleSheets"=>array("main","jquery-ui-1.8.16.custom"),
-            "javascripts"=>array("jquery","jquery-custom")
+            "javascripts"=>array("jquery","jquery-ui-1.8.12.custom.min")
         );
+//        $this->load->view('head',$data);
         $this->load->view('registration',$data);
+//        $this->load->view('foot');
     }
-
     public function uploadFiles(){
         $this->load->model('Uploadfiles');
         $this->Uploadfiles->upload_image();
@@ -26,15 +28,19 @@ class A extends CI_Controller {
             "javascripts"=>array("jquery"),
             "submitURL"=>"a/verify"
         );
+//        $this->load->view('head',$data);
         $this->load->view('verify',$data);
+        //$this->load->view('foot');
     }
     public function createUser(){
+//        $uname = $this->input->post('uname');     
         $this->load->model('registration');
         $this->registration->createfolder();        
     }
 
      public function register(){       
         $inputs = $this->input->post();
+//        if($this->make_secure->sanitize($inputs)){
             $myData = array(
                 'fname' => $inputs['fname'],
                 'lname'=> $inputs['lname'],
@@ -64,6 +70,9 @@ class A extends CI_Controller {
          
         $this->load->model('registration');
         $this->registration->createfolder();
+//        } else {
+//            //redirect to registration page indicating Invalid Input Errors
+//        }
     }
 
     public function login() {
@@ -78,8 +87,17 @@ class A extends CI_Controller {
             $user_id = $this->session->userdata('user_id');
             $username = $this->session->userdata('user_name');
             $user_verified = $this->session->userdata('user_verified');
+
+            if($user_verified===0){
+                echo 1;
+                // Valid user but not yet verified.
+            } else {
+                echo 2;
+                //all set.. Refirect to home page.
+            }
         } else {
-            echo "login fails";
+            echo 0;
+            //Invalid username or password.
         }
     }
 
@@ -91,26 +109,24 @@ class A extends CI_Controller {
         echo "hi";
     }
    function verify(){
-        $inputs = $this->input->post();        
-        $this->session->set_userdata('user_vcode', $inputs['verified']);
-        $this->load->model('auth');
-        $success = $this->auth->verify_user();
-        if($success){
-        } else {
-            echo "Invalid Credentials";
-        }
+
+        $email = $this->input->post('email');
+        $code=$this->input->post('code');
+        
+//        if($this->make_secure->sanitize($inputs)){
+//            $this->session->set_userdata('user_vcode', $inputs['verified']);
+            $this->load->model('auth');            
+            $success = $this->auth->verify_user($code,$email);
+            if($success){          
+            } else {
+                echo "Invalid Credentials";
+            }
     }
 
     function Is_verified(){
-        $email=$this->input->post('email');
-        $this->load->model('auth');
-        $result=$this->auth->isVerify($email);
-        echo $result;
-    }
-
-    function create_poll(){
-        $json = $this->input->post('data');
-        $this->load->model('createpoll');
-        $this->createpoll->insertpoll($json);
+       $email=$this->input->post('email');
+       $this->load->model('auth');
+       $result=$this->auth->isVerify($email);
+       echo $result;
     }
 }

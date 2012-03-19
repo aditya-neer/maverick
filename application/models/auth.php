@@ -13,41 +13,23 @@ class Auth extends CI_Model {
     function userAuthentication($email,$pass){
 
         if (preg_match("^[a-zA-Z]([.]?([a-zA-Z0-9_-]+)*)?@([a-zA-Z0-9\-_]+\.)+[a-zA-Z]{2,4}$^", $email)){
-
-        $query = "SELECT user_user_id,user_user_password,user_user_verified FROM login WHERE user_user_email='$email'";
-        $result = $this->db->query($query);
+            $query = "SELECT user_user_id,user_user_password,user_user_verified FROM login WHERE user_user_email='$email'";
+            $result = $this->db->query($query);
         }
         else{
             $username=$email;
-          $query = "SELECT user_user_id,user_user_password,user_user_verified FROM login WHERE user_user_name='$username'";
-
-          $result = $this->db->query($query);
+            $query = "SELECT user_user_id,user_user_password,user_user_verified FROM login WHERE user_user_name='$username'";
+            $result = $this->db->query($query);
         }
         
         if($result->num_rows() == 1){
             $row = $result->result_array();
             $upass = $row[0]['user_user_password'];
-
-            
             if($upass === $pass){
-                
-              
-
                 $q="SELECT user_name,user_email FROM user WHERE user_id=".$row[0]['user_user_id'];
-                
                 $res = $this->db->query($q);
-                
                 $r = $res->result_array();
-
-                
-//                $loginData = array(
-////                    "user_id"=>$row[0]['user_user_id'],
-////                    "user_veri"=>$row[0]['user_user_verified'],
-//                    "user_email"=>$r[0]['user_email'],
-//                    "user_name"=>$r[0]['user_name']
-//                );
                 $user_id=$row[0]['user_user_id'];
-                
                 $user_verified=$row[0]['user_user_verified'];
 
                 
@@ -55,10 +37,7 @@ class Auth extends CI_Model {
                 $this->session->set_userdata('user_name',$r[0]['user_name']);
                 $this->session->set_userdata('user_verified',$user_verified);
                 $this->session->set_userdata('user_id',$user_id);
-//                $this->session->set_userdata('username',$loginData['user_name']);
-
-               return true;
-                
+                return true;
             } else {
                 //Passwords do not match
                 return FALSE;
@@ -69,18 +48,19 @@ class Auth extends CI_Model {
         }
     }
 
-    function verify_user(){
+    function verify_user($code,$email){
 
 //var_dump($this->session->userdata);
 
 
 
-            $userId = $this->session->userdata('user_id');
-            
-            
-            $v_code = $this->session->userdata('user_vcode');
+//            $userId = $this->session->userdata('user_id');
+//
+//
+//            $v_code = $this->session->userdata('user_vcode');
 
-            $query = "SELECT user_user_code FROM verification WHERE user_user_id=$userId";
+            $query = "SELECT user_user_code FROM verification WHERE user_user_email='$email'";
+           
 
             $result = $this->db->query($query);
 
@@ -88,9 +68,11 @@ class Auth extends CI_Model {
                //echo "<br /> Only ONE";
                $row = $result->result_array();
                $vCode = $row[0]['user_user_code'];
-               if($vCode === $v_code){
-                   $this->session->unset_userdata('user_vcode');
-                   $query = "UPDATE login SET user_user_verified=1 WHERE user_user_id=$userId";
+               if($code === $vCode){
+//                   $this->session->unset_userdata('user_vcode');
+
+                   $query = "UPDATE login SET user_user_verified=1 WHERE user_user_email='$email'";
+                   
                    $result = $this->db->query($query);
                    if($result){
                        redirect('success/verify_user');
@@ -121,6 +103,9 @@ class Auth extends CI_Model {
 
 
     }
+    
+   
+
     
     
 }

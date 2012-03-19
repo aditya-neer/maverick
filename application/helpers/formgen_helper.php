@@ -126,7 +126,7 @@ class database {
     }
 }
 
-function generateForm($formElements,$submitURL,$style='v'){
+function generateForm($formElements,$submitURL,$style='v',$type='r'){
 
     
     
@@ -229,7 +229,13 @@ border:grey 1px solid;
         <table width="100%">
             <tr>
                 <td width="100%" align="center">
-                    <input type="button" value="asd" id="sbmt"/>
+                    <input type="button" value="asd" id="';
+     if($type=='r'){
+        $htmlCode.='rgstr"';
+     } else{
+         $htmlCode.='lgn"';
+     }
+    $htmlCode.='/>
                 </td>
             </tr>
         </table></div>
@@ -249,6 +255,6 @@ function generateLoginForm($submitUrl){
         0=>$element1->createFormElement(),
         1=>$element2->createFormElement()
     );
-    return generateForm($formElements,$submitUrl);
+    return generateForm($formElements,$submitUrl,'v','l');
 }
 
