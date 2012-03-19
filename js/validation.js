@@ -3,8 +3,9 @@ $(document).ready(function(){
        if(checkIfRequiredFieldsAreNotEmpty()){
            if(performDatatypeValidation()){
                 if(validatePasswords()){
-                    var email=document.getElementById('email').value;
-                    $.post('http://localhost/saywtf/index.php/a/login',{"email":email},function(data){
+                    var email= $("#email").val(); //document.getElementById('email').value;
+                    var passw = $("#pass").val();
+                    $.post('http://localhost/saywtf/index.php/a/login',{"email":email,"pass":passw},function(data){
                         if(data==0){ // invalid credentials
                             // Error message - Invalid username or password
                         }
