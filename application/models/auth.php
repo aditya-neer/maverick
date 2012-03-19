@@ -26,7 +26,7 @@ class Auth extends CI_Model {
             $row = $result->result_array();
             $upass = $row[0]['user_user_password'];
             if($upass === $pass){
-                $q="SELECT user_name,user_email FROM user WHERE user_id=".$row[0]['user_user_id'];
+                $q="SELECT user_name,user_email,user_user_verified FROM user WHERE user_id=".$row[0]['user_user_id'];
                 $res = $this->db->query($q);
                 $r = $res->result_array();
                 $user_id=$row[0]['user_user_id'];
