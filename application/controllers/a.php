@@ -111,19 +111,20 @@ class A extends CI_Controller {
         echo "hi";
     }
    function verify(){
-        $inputs = $this->input->post();        
+
+        $email = $this->input->post('email');
+        $code=$this->input->post('code');
+        
 //        if($this->make_secure->sanitize($inputs)){
-            $this->session->set_userdata('user_vcode', $inputs['verified']);
+//            $this->session->set_userdata('user_vcode', $inputs['verified']);
             $this->load->model('auth');            
-            $success = $this->auth->verify_user();
+            $success = $this->auth->verify_user($code,$email);
             if($success){          
             } else {
                 echo "Invalid Credentials";
             }
             
-//        } else {
-//            //redirect to invalid input page
-//        }
+
     }
 
     function Is_verified(){
@@ -138,6 +139,8 @@ echo $result;
 
 
     }
+
+   
 
 
 

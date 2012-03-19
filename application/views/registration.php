@@ -1,3 +1,4 @@
+<?php echo attachStylesheets($styleSheets); ?>
 <div id="regDiv">
 <?php
     
