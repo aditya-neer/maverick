@@ -27,12 +27,12 @@ class Auth extends CI_Model {
             $upass = $row[0]['user_user_password'];
             if($upass === $pass){
                 $q="SELECT user_name,user_email FROM user WHERE user_id=".$row[0]['user_user_id'];
+
                 $res = $this->db->query($q);
                 $r = $res->result_array();
                 $user_id=$row[0]['user_user_id'];
                 $user_verified=$row[0]['user_user_verified'];
-
-                
+                         
                 $this->session->set_userdata('user_email',$r[0]['user_email']);
                 $this->session->set_userdata('user_name',$r[0]['user_name']);
                 $this->session->set_userdata('user_verified',$user_verified);
@@ -50,17 +50,11 @@ class Auth extends CI_Model {
 
     function verify_user($code,$email){
 
-//var_dump($this->session->userdata);
 
-
-
-//            $userId = $this->session->userdata('user_id');
-//
-//
-//            $v_code = $this->session->userdata('user_vcode');
-
-            $query = "SELECT user_user_code FROM verification WHERE user_user_email='$email'";
-           
+            $user_id=$this->session->userdata('user_id');
+            
+            $query = "SELECT user_user_code FROM verification WHERE user_user_id=$user_id";
+            
 
             $result = $this->db->query($query);
 
@@ -71,7 +65,7 @@ class Auth extends CI_Model {
                if($code === $vCode){
 //                   $this->session->unset_userdata('user_vcode');
 
-                   $query = "UPDATE login SET user_user_verified=1 WHERE user_user_email='$email'";
+                   $query = "UPDATE login SET user_user_verified=1 WHERE user_user_id=$user_id";
                    
                    $result = $this->db->query($query);
                    if($result){
