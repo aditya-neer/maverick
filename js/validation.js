@@ -3,6 +3,11 @@ var x = $(document).ready(function(){
 
 
 //alert(document.getElementById('f1').submit());
+
+
+
+
+
        if(checkIfRequiredFieldsAreNotEmpty()){
            if(performDatatypeValidation()){
                 if(validatePasswords()){
@@ -66,32 +71,17 @@ var td3 = jQuery('<td/>', {});
 var label = jQuery('<label />',{
     text:"Enter verification code"
     
-    
 });
 
 var input = jQuery('<input />',{
-    type:"text",
-    id:"vcode"
+    type:"text"
 });
 
 var button = jQuery('<input />',{
     type:"button",
     value:"Verify",
-    id:"Verify",
     style:"margin-left:-200%"
-}).bind('click',function(){
-
-    var code= document.getElementById('vcode').value;
-     var email= document.getElementById('email').value;
-     
-    
-   $.post("http://localhost/saywtf/index.php/a/verify",{"code":code,"email":email},function(data){
-alert(data);
-   });
-
-
-
-});
+}).bind('click',function(){});
 
 td1.append(label);
 td2.append(input);

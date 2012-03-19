@@ -69,19 +69,18 @@ class Auth extends CI_Model {
         }
     }
 
-    function verify_user($code,$email){
+    function verify_user(){
 
 //var_dump($this->session->userdata);
 
 
 
-//            $userId = $this->session->userdata('user_id');
-//
-//
-//            $v_code = $this->session->userdata('user_vcode');
+            $userId = $this->session->userdata('user_id');
+            
+            
+            $v_code = $this->session->userdata('user_vcode');
 
-            $query = "SELECT user_user_code FROM verification WHERE user_user_email='$email'";
-           
+            $query = "SELECT user_user_code FROM verification WHERE user_user_id=$userId";
 
             $result = $this->db->query($query);
 
@@ -89,11 +88,9 @@ class Auth extends CI_Model {
                //echo "<br /> Only ONE";
                $row = $result->result_array();
                $vCode = $row[0]['user_user_code'];
-               if($code === $vCode){
-//                   $this->session->unset_userdata('user_vcode');
-
-                   $query = "UPDATE login SET user_user_verified=1 WHERE user_user_email='$email'";
-                   
+               if($vCode === $v_code){
+                   $this->session->unset_userdata('user_vcode');
+                   $query = "UPDATE login SET user_user_verified=1 WHERE user_user_id=$userId";
                    $result = $this->db->query($query);
                    if($result){
                        redirect('success/verify_user');
@@ -124,9 +121,6 @@ class Auth extends CI_Model {
 
 
     }
-    
-   
-
     
     
 }
