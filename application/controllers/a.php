@@ -4,6 +4,7 @@ class A extends CI_Controller {
 
     public function index() {
         $this->load->view('welcome');
+        //$this->load->view('ape');
     }
     function showRegistration(){
         $data = array(
@@ -117,6 +118,12 @@ class A extends CI_Controller {
     }
     
     function saywtf(){
-        var_dump($this->session->userdata);
+        $data = array(
+            "title"=>"Welcome - ".$this->session->userdata('user_name'),
+            "styleSheets"=>array("saywtf","jquery-ui-1.8.16.custom"),
+            "javascripts"=>array("jquery","jquery-ui-1.8.12.custom.min")
+        );
+        $this->load->view('saywtf',$data);
+        //var_dump($this->session->userdata);
     }
 }

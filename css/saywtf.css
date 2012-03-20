@@ -1,0 +1,66 @@
+/* 
+    Document   : saywtf
+    Created on : Mar 20, 2012, 12:08:54 PM
+    Author     : Adi
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+#mainContainer{
+    position: absolute;
+    top:0%;
+    left:0%;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    overflow: auto;
+}
+
+#mainContainer #header {
+    position: fixed;
+    height: 6%;
+    width: 100%;
+    background-color: yellow;
+    text-align: right;
+}
+
+#mainContainer #header li{
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+#mainContainer #workingArea{
+    position: fixed;
+    top:6%;
+    left:25%;
+    width:75%;
+    height:94%;
+    background-color: greenyellow;
+    overflow: auto;
+}
+
+#mainContainer #workingArea #area{
+    position: relative;
+    height: 10000px;
+    width: 100%;
+    background-color: gray;
+}
+
+#mainContainer #sidebar{
+    position: fixed;
+    top:6%;
+    left:0%;
+    width: 25%;
+    height: 94%;
+    background-color: lemonchiffon;
+}
