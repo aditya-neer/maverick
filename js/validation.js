@@ -14,7 +14,7 @@ $(document).ready(function(){
                             $("#oldUser div:eq(1)").empty().append(newDiv);
                         }
                         else if(data==2){ // 2 = valid credentials and verified
-                          alert('Login successful');
+                          window.location="http://localhost/saywtf/index.php/a/saywtf";
                         }
                     });
                 }else {}
