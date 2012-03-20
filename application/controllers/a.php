@@ -104,10 +104,13 @@ class A extends CI_Controller {
         $code=$this->input->post('code');
         $this->load->model('auth');            
         $success = $this->auth->verify_user($code,$email);
-        if($success){          
-        } else {
-            echo "Invalid Credentials";
+        
+        if($success==true){
+            echo 0;
+        }else{
+            echo 1;
         }
+
     }
 
     function Is_verified(){

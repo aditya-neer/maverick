@@ -1,20 +1,29 @@
 $(document).ready(function(){
-   $("#lgn").bind("click",function(){
-       if(checkIfRequiredFieldsAreNotEmpty()){
-           if(performDatatypeValidation()){
+   
+    $("#lgn").bind("click",function(){       
+        if(checkIfRequiredFieldsAreNotEmpty()){
+            if(performDatatypeValidation()){
                 if(validatePasswords()){
+
+                    
                     var email= $("#email").val(); //document.getElementById('email').value;
                     var passw = $("#pass").val();
-                    $.post('http://localhost/saywtf/index.php/a/login',{"email":email,"pass":passw},function(data){
+                    $.post('http://localhost/saywtf/index.php/a/login',{
+                        "email":email,
+                        "pass":passw
+                    },function(data){
+                        
                         if(data==0){ // invalid credentials
-                            // Error message - Invalid username or password
+                            var div=invalidId();  //
+                            $("#oldUser div:eq(2)").empty().append(div);
+                        // Error message - Invalid username or password
                         }
                         else if(data==1) { // 1 = valid credentials but not verified -
                             var newDiv = addVerify();
                             $("#oldUser div:eq(1)").empty().append(newDiv);
                         }
                         else if(data==2){ // 2 = valid credentials and verified
-                          window.location="http://localhost/saywtf/index.php/a/saywtf";
+                            alert("login sucessful");
                         }
                     });
                 }else {}
@@ -24,13 +33,13 @@ $(document).ready(function(){
     });
 
     $("#rgstr").bind("click",function(){
-       if(checkIfRequiredFieldsAreNotEmpty()){
-           if(performDatatypeValidation()){
-               if(validatePasswords()){
-                   document.getElementById('f1').submit();
-               }else {}
-           } else {}
-       } else {}
+        if(checkIfRequiredFieldsAreNotEmpty()){
+            if(performDatatypeValidation()){
+                if(validatePasswords()){
+                    document.getElementById('f1').submit();
+                }else {}
+            } else {}
+        } else {}
     });
 });
 
@@ -40,66 +49,111 @@ $(document).ready(function(){
 
 function addVerify(){
 
-var div = jQuery('<div/>',{
-    
-});
+    var div = jQuery('<div/>',{});
+    var table = jQuery('<table/>', {
+        style:"margin: auto;display: block;width: 77%;margin-top: -18;margin-left: 348px;"
+    });
+    var tr=jQuery('<tr/>', {
+        });
+    var td1 = jQuery('<td/>', {
+        style:"width:20%"
+    });
+    var td2 = jQuery('<td/>', {});
+    var td3 = jQuery('<td/>', {});
+    var label = jQuery('<label />',{
+        text:"Enter verification code"    
+    });
+    var input = jQuery('<input />',{
+        type:"text",
+        id:"vcode"
+    });
+    var button = jQuery('<input />',{
+        type:"button",
+        value:"Verify",
+        id:"Verify",
+        style:"margin-left:-200%"
+    }).bind('click',function(){
+        var code= document.getElementById('vcode').value;
+        var email= document.getElementById('email').value;
+        $.post("http://localhost/saywtf/index.php/a/verify",{"code":code,"email":email},function(data){
+           if(data==1)            
+            {
+                var div=verify();  //
+                $("#oldUser div:eq(3)").empty().append(div);
+            }
+            else if(data==0){
+                 $("#oldUser div:eq(3)").empty();
+                alert("validation sucessful")
+            }
+        });
+    });
 
-var table = jQuery('<table/>', {
-style:"margin: auto;display: block;width: 77%;margin-top: -18;margin-left: 348px;"
-});
+    td1.append(label);
+    td2.append(input);
+    td3.append(button);
 
-var tr=jQuery('<tr/>', {
-});
+    tr.append(td1);
+    tr.append(td2);
+    tr.append(td3);
 
-var td1 = jQuery('<td/>', {
-    style:"width:20%"
-});
-var td2 = jQuery('<td/>', {});
-var td3 = jQuery('<td/>', {});
-
-var label = jQuery('<label />',{
-    text:"Enter verification code"
-    
-    
-});
-
-var input = jQuery('<input />',{
-    type:"text",
-    id:"vcode"
-});
-
-var button = jQuery('<input />',{
-    type:"button",
-    value:"Verify",
-    id:"Verify",
-    style:"margin-left:-200%"
-}).bind('click',function(){
-
-    var code= document.getElementById('vcode').value;
-     var email= document.getElementById('email').value;
-     
-    
-   $.post("http://localhost/saywtf/index.php/a/verify",{"code":code,"email":email},function(data){
-alert(data);
-   });
-
-
-
-});
-
-td1.append(label);
-td2.append(input);
-td3.append(button);
-
-tr.append(td1);
-tr.append(td2);
-tr.append(td3);
-
-table.append(tr);
-div.append(table);
-return div;
+    table.append(tr);
+    div.append(table);
+    return div;
 }
 
+
+function invalidId(){
+
+    var div = jQuery('<div/>',{
+
+        });
+
+    var table = jQuery('<table/>', {
+        style:"margin: auto;display: block;width: 100%;margin-top: 10;margin-left: 400px;"
+    });
+    var tr=jQuery('<tr/>', {
+        });
+    var td1 = jQuery('<td/>', {
+        style:"width:20%"
+    });
+    var label = jQuery('<label />',{
+        text:"Invalid email id or password",
+        style:"color:red"
+    });
+
+
+
+    td1.append(label);
+    tr.append(td1);
+    table.append(tr);
+    div.append(table);
+
+
+    return div;
+
+
+
+}
+
+function verify(){
+    var div = jQuery('<div/>',{});
+    var table = jQuery('<table/>', {
+        style:"margin: auto;display: block;width: 100%;margin-top: 10;margin-left: 400px;"
+    });
+    var tr=jQuery('<tr/>', {});
+    var td1 = jQuery('<td/>', {
+        style:"width:20%"
+    });
+    var label = jQuery('<label />',{
+        text:"Please Enter valid verfication code",
+        style:"color:red"
+    });
+    td1.append(label);
+    tr.append(td1);
+    table.append(tr);
+    div.append(table);
+    return div;
+}
 
 function validation() {
     this.noValidation = -1;
@@ -142,10 +196,8 @@ function validate(validationType,stringToBeValidated){
         }
     } else if(validationType == v.noValidation) {
         return true;
-    }
-    
-    return false;
-    
+    }  
+    return false;    
 }
 
 function performDatatypeValidation(){
@@ -177,13 +229,12 @@ function performDatatypeValidation(){
     } else {
         hideErrorMessage();
         return true;
-        //alert("success");
+    //alert("success");
     }
     
 }
 
 function checkIfRequiredFieldsAreNotEmpty(){
-
     //alert("to while loop");
     var errorMessage = "* Oops Some Errors occured. Please make sure the field indicated by red border are correctly filled.";
 
@@ -212,7 +263,7 @@ function checkIfRequiredFieldsAreNotEmpty(){
                 }
             } else {
                 if(!Value.match(/\S/)){
-                    //alert("failed at - "+Name+" But Its OK, since its not mandatory");
+                //alert("failed at - "+Name+" But Its OK, since its not mandatory");
                 } else {
                     applyOKStyle(isElement);
                 }
