@@ -81,14 +81,14 @@ class A extends CI_Controller {
         $upass = $this->input->post('pass');
 
         $result = $this->auth->userAuthentication($email, $upass);
-
+        
         if ($result == TRUE) {
             $email = $this->session->userdata('user_email');
             $user_id = $this->session->userdata('user_id');
             $username = $this->session->userdata('user_name');
             $user_verified = $this->session->userdata('user_verified');
 
-            if($user_verified===0){
+            if($user_verified==0){
                 echo 1;
                 // Valid user but not yet verified.
             } else {
