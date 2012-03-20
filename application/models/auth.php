@@ -75,12 +75,14 @@ class Auth extends CI_Model {
                    
                    $result = $this->db->query($query);
                    if($result){
-                       redirect('success/verify_user');
+                       return true;
                    } else {
-                       redirect('error/verify_user');
+//                       redirect('error/verify_user');
+                       return false;
                    }
                } else {
-                   redirect('failure/verify_user');
+//                   redirect('failure/verify_user');
+                   return false;
                }
            }
     }
