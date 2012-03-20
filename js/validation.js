@@ -1,12 +1,19 @@
 $(document).ready(function(){
+    
    $("#lgn").bind("click",function(){
+       
        if(checkIfRequiredFieldsAreNotEmpty()){
            if(performDatatypeValidation()){
                 if(validatePasswords()){
+
+                    
                     var email= $("#email").val(); //document.getElementById('email').value;
                     var passw = $("#pass").val();
                     $.post('http://localhost/saywtf/index.php/a/login',{"email":email,"pass":passw},function(data){
+                        
                         if(data==0){ // invalid credentials
+                          var div=invalidId();  //
+                          $("#oldUser div:eq(2)").empty().append(div);
                             // Error message - Invalid username or password
                         }
                         else if(data==1) { // 1 = valid credentials but not verified -
@@ -14,7 +21,7 @@ $(document).ready(function(){
                             $("#oldUser div:eq(1)").empty().append(newDiv);
                         }
                         else if(data==2){ // 2 = valid credentials and verified
-                          window.location="http://localhost/saywtf/index.php/a/saywtf";
+                          alert('Login successful');
                         }
                     });
                 }else {}
@@ -100,6 +107,40 @@ div.append(table);
 return div;
 }
 
+
+function invalidId(){
+
+
+var div = jQuery('<div/>',{
+
+});
+
+var table = jQuery('<table/>', {
+style:"margin: auto;display: block;width: 100%;margin-top: 10;margin-left: 400px;"
+});
+var tr=jQuery('<tr/>', {
+});
+var td1 = jQuery('<td/>', {
+    style:"width:20%"
+});
+var label = jQuery('<label />',{
+    text:"Invalid email id or password",
+    style:"color:red"
+});
+
+
+
+td1.append(label);
+tr.append(td1);
+table.append(tr);
+div.append(table);
+
+
+return div;
+
+
+
+}
 
 function validation() {
     this.noValidation = -1;
